@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cricket Scorecard</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+    }
+    button {
+      margin: 5px;
+      padding: 10px 15px;
+      font-size: 16px;
+    }
+    .score {
+      margin-top: 20px;
+      font-size: 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Cricket Scorecard</h2>
+
+ 
+  <button onclick="addBall(0)">0</button>
+  <button onclick="addBall(1)">1</button>
+  <button onclick="addBall(2)">2</button>
+  <button onclick="addBall(3)">3</button>
+  <button onclick="addBall(4)">4</button>
+  <button onclick="addBall(6)">6</button>
+  <button onclick="addBall('W')">Wicket</button>
+  <button onclick="addBall('N')">noball</button>
+  <button onclick="addBall('1wide')">wide</button>
+  <button onclick="addBall('DOT')">dot</button>
+  <div class="score">
+    <p>Total Score: <span id="score">0</span></p>
+    <p>noball: <span id="noball">0</span></p>
+    <p>noball: <span id="dot">0</span></p>
+    <p>Wickets: <span id="wickets">0</span></p>
+    <p>Wide: <span id="wide">0</span></p>
+    <p>scoreline:</p>
+    <div id="scoreline"></div>
+  </div>
+
+<script>
+let totalScore = 0;
+let totalWickets = 0;
+let totalnoballs = 0;
+let totalwides = 0;
+let totaldots = 0;
+let balls = [];
+let ballCount = 0;
+
+function addBall(run) {
+  
+  ballCount++;
+
+  if (run === 'W') {
+    totalWickets++;
+    balls.push('W');
+
+  }else if (run === '1wide') {
+    totalwides++;
+    totalScore += 1;  
+    balls.push('Wd');
+  
+  }
+   else if (run === 'N'){
+     totalnoballs++;
+      
+     balls.push('N');
+
+  }  else if (run === 'DOT'){
+     totaldots++;
+      
+     balls.push('.');
+  }
+  else{
+    totalScore += run;
+    balls.push(run);
+  }
+  
+
+ 
+  document.getElementById("score").innerText = totalScore;
+  document.getElementById("wickets").innerText = totalWickets;
+  document.getElementById("noball").innerText = totalnoballs;
+  document.getElementById("wide").innerText = totalwides;
+
+  showscoreline();
+}
+
+function showscoreline() {
+  let overDiv = document.getElementById("scoreline");
+  overDiv.innerHTML = "";
+
+  let overNumber = 1;
+  for (let i = 0; i < balls.length; i += 6) {
+    let overBalls = balls.slice(i, i + 6);
+    let p = document.createElement("p");
+    p.innerText = "scoreline " + overNumber + " : " + overBalls.join(" ");
+    overDiv.appendChild(p);
+    overNumber++;
+  }
+}
+</script>
+
+</body>
+</html>
